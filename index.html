@@ -10,11 +10,13 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(135deg, #FFF8E7 0%, #FFF0E0 100%);
             min-height: 100vh;
         }
+
         header {
             background: linear-gradient(135deg, #FF9F43 0%, #FF6B35 100%);
             color: white;
@@ -23,6 +25,7 @@
             position: relative;
             overflow: hidden;
         }
+
         header::before {
             content: '';
             position: absolute;
@@ -33,30 +36,36 @@
             background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             transform: rotate(15deg);
         }
+
         .header-content {
             position: relative;
             z-index: 1;
         }
+
         .header-icon {
             font-size: 3rem;
             margin-bottom: 0.5rem;
         }
+
         h1 {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
+
         .subtitle {
             font-size: 1.1rem;
             opacity: 0.9;
-            margin-bottom: 1rem;
         }
+
         .tags {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 0.5rem;
+            margin-top: 1rem;
         }
+
         .tag {
             background: rgba(255,255,255,0.25);
             padding: 0.3rem 0.8rem;
@@ -64,16 +73,19 @@
             font-size: 0.85rem;
             backdrop-filter: blur(4px);
         }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem 1rem;
         }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
         }
+
         .card {
             background: white;
             border-radius: 16px;
@@ -82,60 +94,234 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
         }
+
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
+
         .card-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
             background: linear-gradient(135deg, #FFE0B2 0%, #FFCC80 100%);
         }
+
         .card-content {
             padding: 1.2rem;
         }
+
         .card-header {
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
+
         .food-emoji {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
+
         .food-name {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #333;
         }
-        .description {
+
+        .card-desc {
             color: #666;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
-        .info-row {
+
+        .card-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 0.8rem;
+            padding-top: 0.6rem;
             border-top: 1px solid #eee;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
+
         .location {
             color: #FF6B35;
             display: flex;
             align-items: center;
             gap: 0.3rem;
         }
+
         .recommend {
             background: #FFF3E0;
             color: #E65100;
-            padding: 0.3rem 0.6rem;
-            border-radius: 12px;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
             font-weight: 500;
         }
+
+        #detail-page {
+            display: none;
+        }
+
+        .detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #FF6B35;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #E65100;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-emoji {
+            font-size: 3rem;
+        }
+
+        .detail-title {
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .detail-shop {
+            color: #FF6B35;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #FFE0B2 0%, #FFCC80 100%);
+        }
+
+        .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-tag {
+            background: #FFF3E0;
+            color: #E65100;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .detail-desc {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .recommend-section {
+            background: linear-gradient(135deg, #FFF8E7 0%, #FFF0E0 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .recommend-label {
+            color: #FF6B35;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .recommend-text {
+            color: #555;
+            font-style: italic;
+            line-height: 1.7;
+        }
+
+        .recommend-name {
+            text-align: right;
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .like-btn {
+            background: #FFF3E0;
+            color: #E65100;
+        }
+
+        .like-btn:hover {
+            background: #FFE0B2;
+            transform: translateY(-2px);
+        }
+
+        .like-btn.liked {
+            background: #FFE0B2;
+        }
+
+        .collect-btn {
+            background: #E3F2FD;
+            color: #1976D2;
+        }
+
+        .collect-btn:hover {
+            background: #BBDEFB;
+            transform: translateY(-2px);
+        }
+
+        .collect-btn.collected {
+            background: #BBDEFB;
+        }
+
         footer {
             background: #333;
             color: white;
@@ -143,6 +329,7 @@
             padding: 2rem 1rem;
             margin-top: 3rem;
         }
+
         .github-btn {
             display: inline-block;
             background: #FF6B35;
@@ -154,43 +341,36 @@
             transition: background 0.3s ease;
             margin-bottom: 1rem;
         }
+
         .github-btn:hover {
             background: #E65100;
         }
+
         .footer-text {
             opacity: 0.7;
             font-size: 0.9rem;
         }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.8rem;
             }
+
             .grid {
                 grid-template-columns: 1fr;
             }
+
             .card-image {
                 height: 180px;
             }
-        }
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: rgba(0,0,0,0.85);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            max-width: 90%;
-            text-align: center;
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
+
+            .detail-image {
+                height: 250px;
+            }
+
+            .detail-title {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -208,140 +388,270 @@
             </div>
         </div>
     </header>
-    <main class="container">
-        <div class="grid">
-            <div class="card" data-message="超多同学安利！放学就去试试～">
-                <img src="https://source.unsplash.com/featured/?friedrice,teppanyaki" alt="铁板炒饭" class="card-image">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="food-emoji">🍳</span>
-                        <h3 class="food-name">阿强铁板炒饭</h3>
-                    </div>
-                    <p class="description">粒粒分明的米饭配上新鲜时蔬和嫩滑的鸡蛋，铁板现炒香气扑鼻。老板火候掌握得刚刚好，每一口都是锅气十足的满足感！</p>
-                    <div class="info-row">
-                        <span class="location">📍 西门小巷</span>
-                        <span class="recommend">班长推荐</span>
-                    </div>
+
+    <main id="home-page" class="container">
+        <div class="grid" id="food-grid"></div>
+    </main>
+
+    <main id="detail-page">
+        <div class="detail-container">
+            <a href="#home" class="back-btn" id="back-btn">
+                ← 返回首页
+            </a>
+            <div class="detail-header">
+                <span class="detail-emoji" id="detail-emoji">🍳</span>
+                <div>
+                    <h2 class="detail-title" id="detail-title">美食名称</h2>
+                    <p class="detail-shop" id="detail-shop">店铺名称</p>
                 </div>
             </div>
-            <div class="card" data-message="酸辣过瘾！这酸爽根本停不下来～">
-                <img src="https://source.unsplash.com/featured/?luosifen,snails" alt="螺蛳粉" class="card-image">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="food-emoji">🍜</span>
-                        <h3 class="food-name">柳州螺蛳粉</h3>
-                    </div>
-                    <p class="description">正宗柳州风味，酸笋的独特香气配上红油汤底，腐竹酥脆、花生饱满。爱吃辣的小伙伴一定要试试加辣版本！</p>
-                    <div class="info-row">
-                        <span class="location">📍 东门小吃街</span>
-                        <span class="recommend">学习委员推荐</span>
-                    </div>
-                </div>
+            <img src="" alt="" class="detail-image" id="detail-image">
+            <div class="detail-tags" id="detail-tags"></div>
+            <p class="detail-desc" id="detail-desc"></p>
+            <div class="recommend-section">
+                <div class="recommend-label">💬 推荐人说</div>
+                <p class="recommend-text" id="recommend-text"></p>
+                <p class="recommend-name" id="recommend-name">—— 推荐人</p>
             </div>
-            <div class="card" data-message="早餐绝配！外酥里嫩超好吃～">
-                <img src="https://source.unsplash.com/featured/?pancake,chinese" alt="煎饼果子" class="card-image">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="food-emoji">🥞</span>
-                        <h3 class="food-name">天津煎饼果子</h3>
-                    </div>
-                    <p class="description">金黄酥脆的薄饼裹上新鲜鸡蛋，配上秘制甜面酱和脆饼，分量足又管饱。早上来一套，元气满满一整天！</p>
-                    <div class="info-row">
-                        <span class="location">📍 南门早市</span>
-                        <span class="recommend">体育委员推荐</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card" data-message="奶茶续命！甜度刚刚好～">
-                <img src="https://source.unsplash.com/featured/?milktea,bubbletea" alt="奶茶工坊" class="card-image">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="food-emoji">🥤</span>
-                        <h3 class="food-name">茶语时光奶茶</h3>
-                    </div>
-                    <p class="description">现煮茶底搭配新鲜牛奶，珍珠Q弹有嚼劲。招牌芋泥波波奶绿是全班公认的必点饮品！</p>
-                    <div class="info-row">
-                        <span class="location">📍 教学楼对面</span>
-                        <span class="recommend">文艺委员推荐</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card" data-message="外酥里嫩！追剧必备～">
-                <img src="https://source.unsplash.com/featured/?friedchicken,crispy" alt="炸鸡小屋" class="card-image">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="food-emoji">🍗</span>
-                        <h3 class="food-name">Obligi炸鸡小屋</h3>
-                    </div>
-                    <p class="description">韩式炸鸡外酥里嫩，蜂蜜芥末酱是绝配！配上冰可乐，简直是周末追剧的完美搭档。</p>
-                    <div class="info-row">
-                        <span class="location">📍 后街中段</span>
-                        <span class="recommend">生活委员推荐</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card" data-message="暖心暖胃！冬天来一碗超治愈～">
-                <img src="https://source.unsplash.com/featured/?malatang,hotpot" alt="麻辣烫" class="card-image">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="food-emoji">🍲</span>
-                        <h3 class="food-name">川味麻辣烫</h3>
-                    </div>
-                    <p class="description">自选食材新鲜丰富，汤底麻辣鲜香。冬天来一碗，从头暖到脚，简直是御寒神器！</p>
-                    <div class="info-row">
-                        <span class="location">📍 食堂后门</span>
-                        <span class="recommend">卫生委员推荐</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card" data-message="校门口的回忆！百吃不厌～">
-                <img src="https://source.unsplash.com/featured/?coldnoodles,grilled" alt="烤冷面" class="card-image">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="food-emoji">🌭</span>
-                        <h3 class="food-name">东北烤冷面</h3>
-                    </div>
-                    <p class="description">劲道的冷面皮包裹着鸡蛋和火腿肠，刷上秘制酱料撒上芝麻，校门口的经典味道，每次路过都想来一份！</p>
-                    <div class="info-row">
-                        <span class="location">📍 北门门口</span>
-                        <span class="recommend">宣传委员推荐</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card" data-message="甜蜜暴击！饭后甜点首选～">
-                <img src="https://source.unsplash.com/featured/?milkpudding,dessert" alt="双皮奶甜品铺" class="card-image">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="food-emoji">🧁</span>
-                        <h3 class="food-name">粤味双皮奶</h3>
-                    </div>
-                    <p class="description">正宗广东风味，奶皮厚实香醇，口感细腻顺滑。红豆双皮奶和芒果双皮奶是人气爆款！</p>
-                    <div class="info-row">
-                        <span class="location">📍 步行街转角</span>
-                        <span class="recommend">团支书推荐</span>
-                    </div>
-                </div>
+            <div class="actions">
+                <button class="action-btn like-btn" id="like-btn">
+                    <span>👍</span>
+                    <span id="like-count">0</span>
+                </button>
+                <button class="action-btn collect-btn" id="collect-btn">
+                    <span>⭐</span>
+                    <span>收藏</span>
+                </button>
             </div>
         </div>
     </main>
+
     <footer>
         <a href="https://github.com/19556603010/class-food-map" class="github-btn" target="_blank">📦 查看源码</a>
         <p class="footer-text">通过 GitHub Pages 可在线访问</p>
     </footer>
-    <div class="toast" id="toast"></div>
+
     <script>
-        const cards = document.querySelectorAll('.card');
-        const toast = document.getElementById('toast');
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                const message = card.dataset.message;
-                toast.textContent = message;
-                toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 2500);
+        const foods = [
+            {
+                id: 0,
+                name: '阿强铁板炒饭',
+                emoji: '🍳',
+                image: 'https://source.unsplash.com/featured/?friedrice,teppanyaki',
+                location: '📍 西门小巷',
+                recommender: '班长推荐',
+                shortDesc: '粒粒分明的米饭配上新鲜时蔬和嫩滑的鸡蛋，铁板现炒香气扑鼻',
+                tags: ['🔥 招牌必点', '💰 人均12元', '⏰ 11:00-21:00', '✨ 锅气十足'],
+                desc: '这家铁板炒饭可是我们班的集体回忆！记得高二那年冬天，晚自习后大家总爱结伴来这里。老板阿强是个很热情的大叔，炒饭的时候铁板滋滋作响，香气能飘出好几条街。米饭粒粒分明，鸡蛋炒得金黄嫩滑，加上胡萝卜丁、玉米粒和火腿，每一口都是满满的幸福感。最绝的是他自制的辣酱，辣得过瘾但又不会太刺激，配饭简直绝了！',
+                recommendText: '这家店从我高一就开始吃了，三年来味道一直没变！每次考试前压力大的时候，我都会来吃一份加辣的铁板炒饭，吃完瞬间满血复活。强烈推荐加蛋加肠的豪华版，保证你吃了还想吃！',
+                recommendName: '班长 张小明'
+            },
+            {
+                id: 1,
+                name: '柳州螺蛳粉',
+                emoji: '🍜',
+                image: 'https://source.unsplash.com/featured/?luosifen,snails',
+                location: '📍 东门小吃街',
+                recommender: '学习委员推荐',
+                shortDesc: '正宗柳州风味，酸笋的独特香气配上红油汤底，腐竹酥脆、花生饱满',
+                tags: ['🌶️ 酸辣过瘾', '💰 人均15元', '⏰ 10:00-22:00', '🌿 正宗柳州味'],
+                desc: '这家螺蛳粉是学习委员发现的宝藏店铺！虽然味道有点独特，但吃过一次就会上瘾。酸笋的酸爽、腐竹的酥脆、花生的香脆，再加上辣油的刺激，简直是味蕾的狂欢。每次月考结束，我们几个好朋友都会来这里聚餐，一边吐槽考试一边吸溜螺蛳粉，烦恼瞬间消失！',
+                recommendText: '作为一个螺蛳粉重度爱好者，我可以负责任地说这家是我吃过最正宗的！汤头浓郁，酸笋够臭够香，粉的口感也很劲道。建议第一次尝试的同学从微辣开始，慢慢挑战自己的极限～',
+                recommendName: '学习委员 李婷婷'
+            },
+            {
+                id: 2,
+                name: '天津煎饼果子',
+                emoji: '🥞',
+                image: 'https://source.unsplash.com/featured/?pancake,chinese',
+                location: '📍 南门早市',
+                recommender: '体育委员推荐',
+                shortDesc: '金黄酥脆的薄饼裹上新鲜鸡蛋，配上秘制甜面酱和脆饼，分量足又管饱',
+                tags: ['🌅 早餐首选', '💰 人均6元', '⏰ 6:00-10:00', '⚽ 补充能量'],
+                desc: '体育委员每天早上训练前都会来这里吃煎饼果子！这家的煎饼皮特别薄脆，鸡蛋摊得金黄均匀，配上老板自制的甜面酱和酥脆的馃篦儿，一口下去咔嚓作响。早上来一套，一整天都精力充沛。老板是天津人，说话特别逗，每次去都能听他讲段子。',
+                recommendText: '训练前必须来一套！碳水化合物充足，吃完跑五公里都不带喘气的。老板人特别好，知道我训练量大，每次都给我多加一个鸡蛋。强烈推荐加辣条的隐藏吃法，绝对惊艳！',
+                recommendName: '体育委员 王大力'
+            },
+            {
+                id: 3,
+                name: '茶语时光奶茶',
+                emoji: '🥤',
+                image: 'https://source.unsplash.com/featured/?milktea,bubbletea',
+                location: '📍 教学楼对面',
+                recommender: '文艺委员推荐',
+                shortDesc: '现煮茶底搭配新鲜牛奶，珍珠Q弹有嚼劲。招牌芋泥波波奶绿是全班公认的必点饮品',
+                tags: ['🧋 芋泥波波', '💰 人均12元', '⏰ 9:00-22:00', '📚 自习必备'],
+                desc: '教学楼对面的奶茶店简直是我们的秘密基地！文艺委员发现的这家店，芋泥波波奶绿堪称一绝。芋泥都是每天新鲜现做的，绵密香甜，配上清爽的奶绿，一点都不腻。我们经常在这里讨论班级活动策划，一杯奶茶就能让灵感源源不断。',
+                recommendText: '每次写策划案没思路的时候，我就会来这里点一杯芋泥波波奶绿。看着窗外的梧桐树，喝着香甜的奶茶，灵感自然而然就来了。他们家的芋泥真的超级足，性价比超高！',
+                recommendName: '文艺委员 陈思思'
+            },
+            {
+                id: 4,
+                name: 'Obligi炸鸡小屋',
+                emoji: '🍗',
+                image: 'https://source.unsplash.com/featured/?friedchicken,crispy',
+                location: '📍 后街中段',
+                recommender: '生活委员推荐',
+                shortDesc: '韩式炸鸡外酥里嫩，蜂蜜芥末酱是绝配！配上冰可乐，简直是周末追剧的完美搭档',
+                tags: ['🍯 蜂蜜芥末', '💰 人均25元', '⏰ 11:00-23:00', '📺 追剧必备'],
+                desc: '生活委员发掘的这家韩式炸鸡店，简直是我们周末的快乐源泉！炸鸡外皮酥脆到咬开有咔嚓声，内里的鸡肉却鲜嫩多汁。蜂蜜芥末酱是他们家的灵魂，甜中带辣，蘸什么都好吃。记得高三那年冬天，我们全班在这里跨年，炸鸡配啤酒，笑声回荡在整个小店。',
+                recommendText: '这家炸鸡我能吃一辈子！外皮超级脆，肉又嫩又多汁。一定要点蜂蜜芥末味的，相信我，蘸酱吃一口就上头。建议搭配冰可乐，解腻又爽！',
+                recommendName: '生活委员 赵小琳'
+            },
+            {
+                id: 5,
+                name: '川味麻辣烫',
+                emoji: '🍲',
+                image: 'https://source.unsplash.com/featured/?malatang,hotpot',
+                location: '📍 食堂后门',
+                recommender: '卫生委员推荐',
+                shortDesc: '自选食材新鲜丰富，汤底麻辣鲜香。冬天来一碗，从头暖到脚，简直是御寒神器',
+                tags: ['🌶️ 麻辣鲜香', '💰 人均18元', '⏰ 10:00-21:00', '❄️ 冬日暖身'],
+                desc: '食堂后门的这家麻辣烫是卫生委员的最爱！食材都是当天新鲜采购的，种类超级丰富。汤底是正宗的川味麻辣，辣得过瘾但又不会让人觉得不舒服。冬天上完体育课，来一碗热乎乎的麻辣烫，瞬间驱散全身的寒气。老板还会贴心地问你要不要加麻加辣。',
+                recommendText: '作为一个四川人，这家的麻辣烫真的很对我的胃口！汤底够麻够辣，食材也很新鲜。推荐必点牛肉丸、藕片和宽粉，吸满汤汁后超级入味。冬天来一碗，暖到心里！',
+                recommendName: '卫生委员 刘小红'
+            },
+            {
+                id: 6,
+                name: '东北烤冷面',
+                emoji: '🌭',
+                image: 'https://source.unsplash.com/featured/?coldnoodles,grilled',
+                location: '📍 北门门口',
+                recommender: '宣传委员推荐',
+                shortDesc: '劲道的冷面皮包裹着鸡蛋和火腿肠，刷上秘制酱料撒上芝麻，校门口的经典味道',
+                tags: ['🔥 校门口回忆', '💰 人均8元', '⏰ 5:00-22:00', '✨ 经典小吃'],
+                desc: '北门门口的烤冷面摊承载了我们太多的回忆！宣传委员每天放学都会来买一份。老板手法娴熟，冷面皮烤得恰到好处，鸡蛋打得均匀，加上火腿肠和香菜，刷上秘制酱料，撒上芝麻和葱花，简直是人间美味。每次放学铃声一响，这里就排起长队。',
+                recommendText: '这是我每天放学的必修课！冷面皮劲道有嚼劲，酱料是老板秘制的，甜辣适中。一定要加辣条和卫龙，相信我，那味道绝了！每次路过都忍不住要买一份。',
+                recommendName: '宣传委员 孙小华'
+            },
+            {
+                id: 7,
+                name: '粤味双皮奶',
+                emoji: '🧁',
+                image: 'https://source.unsplash.com/featured/?milkpudding,dessert',
+                location: '📍 步行街转角',
+                recommender: '团支书推荐',
+                shortDesc: '正宗广东风味，奶皮厚实香醇，口感细腻顺滑。红豆双皮奶和芒果双皮奶是人气爆款',
+                tags: ['🥛 奶香浓郁', '💰 人均10元', '⏰ 11:00-21:00', '💕 甜蜜时光'],
+                desc: '步行街转角的双皮奶店是团支书的私藏！正宗的广东风味，奶皮厚实香醇，口感细腻顺滑得像丝绸一样。红豆双皮奶里的红豆煮得软烂香甜，芒果双皮奶用的是新鲜芒果，果香浓郁。每次班级团建结束，我们都会来这里吃甜品，聊聊天放松一下。',
+                recommendText: '这家双皮奶真的太治愈了！奶香味超级浓郁，口感顺滑得像在吃云朵。推荐夏天吃冰双皮奶，配上红豆或者芒果，简直是神仙享受。心情不好的时候来一碗，瞬间治愈所有烦恼！',
+                recommendName: '团支书 周小美'
+            }
+        ];
+
+        const homePage = document.getElementById('home-page');
+        const detailPage = document.getElementById('detail-page');
+        const foodGrid = document.getElementById('food-grid');
+        const backBtn = document.getElementById('back-btn');
+
+        const likeBtn = document.getElementById('like-btn');
+        const collectBtn = document.getElementById('collect-btn');
+        const likeCount = document.getElementById('like-count');
+
+        let currentFood = null;
+        const likes = {};
+        const collects = {};
+
+        function renderHomePage() {
+            foodGrid.innerHTML = '';
+            foods.forEach(food => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${food.image}" alt="${food.name}" class="card-image">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <span class="food-emoji">${food.emoji}</span>
+                            <h3 class="food-name">${food.name}</h3>
+                        </div>
+                        <p class="card-desc">${food.shortDesc}</p>
+                        <div class="card-info">
+                            <span class="location">${food.location}</span>
+                            <span class="recommend">${food.recommender}</span>
+                        </div>
+                    </div>
+                `;
+                card.addEventListener('click', () => {
+                    showDetail(food);
+                });
+                foodGrid.appendChild(card);
             });
+        }
+
+        function showDetail(food) {
+            currentFood = food;
+            
+            document.getElementById('detail-emoji').textContent = food.emoji;
+            document.getElementById('detail-title').textContent = food.name;
+            document.getElementById('detail-shop').textContent = food.location.replace('📍 ', '');
+            document.getElementById('detail-image').src = food.image;
+            document.getElementById('detail-image').alt = food.name;
+            document.getElementById('detail-desc').textContent = food.desc;
+            document.getElementById('recommend-text').textContent = food.recommendText;
+            document.getElementById('recommend-name').textContent = '—— ' + food.recommendName;
+
+            const tagsContainer = document.getElementById('detail-tags');
+            tagsContainer.innerHTML = '';
+            food.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'detail-tag';
+                tagElement.textContent = tag;
+                tagsContainer.appendChild(tagElement);
+            });
+
+            likeCount.textContent = likes[food.id] || 0;
+            likeBtn.classList.toggle('liked', collects[food.id]);
+            collectBtn.classList.toggle('collected', collects[food.id]);
+
+            homePage.style.display = 'none';
+            detailPage.style.display = 'block';
+
+            window.location.hash = `#detail-${food.id}`;
+        }
+
+        function goHome() {
+            detailPage.style.display = 'none';
+            homePage.style.display = 'block';
+            window.location.hash = '#home';
+        }
+
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            goHome();
         });
+
+        likeBtn.addEventListener('click', () => {
+            if (currentFood) {
+                likes[currentFood.id] = (likes[currentFood.id] || 0) + 1;
+                likeCount.textContent = likes[currentFood.id];
+            }
+        });
+
+        collectBtn.addEventListener('click', () => {
+            if (currentFood) {
+                collects[currentFood.id] = !collects[currentFood.id];
+                collectBtn.classList.toggle('collected', collects[currentFood.id]);
+            }
+        });
+
+        function handleHashChange() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#detail-')) {
+                const id = parseInt(hash.split('-')[1]);
+                const food = foods.find(f => f.id === id);
+                if (food) {
+                    showDetail(food);
+                    return;
+                }
+            }
+            goHome();
+        }
+
+        window.addEventListener('hashchange', handleHashChange);
+
+        renderHomePage();
+
+        handleHashChange();
     </script>
 </body>
 </html>
