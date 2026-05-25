@@ -13,52 +13,85 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #FFF8E7 0%, #FFF0E0 100%);
+            background: linear-gradient(180deg, #FFFBF5 0%, #FFF8E7 30%, #FFF0E0 60%, #FFFAF0 100%);
             min-height: 100vh;
+            padding-top: 280px;
+            overflow-x: hidden;
         }
 
+        /* 导航栏基础样式 */
         header {
-            background: linear-gradient(135deg, #FF9F43 0%, #FF6B35 100%);
+            background: linear-gradient(135deg, #FF9F43 0%, #FF6B35 50%, #E65100 100%);
             color: white;
-            padding: 2rem 1rem;
+            padding: 1.5rem 1rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 20px rgba(255, 107, 53, 0.3);
         }
 
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            transform: rotate(15deg);
+        /* 导航栏收缩状态 */
+        header.scrolled {
+            padding: 0.6rem 1rem;
+            box-shadow: 0 4px 30px rgba(255, 107, 53, 0.4);
         }
 
-        .header-content {
-            position: relative;
-            z-index: 1;
+        header.scrolled .header-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        header.scrolled h1 {
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+        }
+
+        header.scrolled .subtitle {
+            display: none;
+        }
+
+        header.scrolled .search-box {
+            max-width: 400px;
+            padding: 0.5rem 1rem;
+        }
+
+        header.scrolled .filter-section {
+            margin-top: 0.5rem;
         }
 
         .header-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
+            margin-bottom: 1rem;
         }
 
-        .tags {
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .filter-section {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -66,12 +99,24 @@
             margin-top: 1rem;
         }
 
-        .tag {
-            background: rgba(255,255,255,0.25);
-            padding: 0.3rem 0.8rem;
+        .filter-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: white;
+            padding: 0.4rem 0.9rem;
             border-radius: 20px;
             font-size: 0.85rem;
-            backdrop-filter: blur(4px);
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(255,255,255,0.98);
+            color: #FF6B35;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
         }
 
         .container {
@@ -82,29 +127,73 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
         }
 
+        /* 卡片基础样式 */
         .card {
             background: white;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: cardFadeIn 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
+        /* 卡片进入动画 - 错开时间 */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+        .card:nth-child(8) { animation-delay: 0.8s; }
+
+        /* 卡片进入动画关键帧 */
+        @keyframes cardFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translateY(-5px) scale(1.01);
+            }
+            70% {
+                transform: translateY(3px) scale(0.99);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* 卡片悬停效果 */
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(255, 107, 53, 0.25), 0 0 0 1px rgba(255, 107, 53, 0.15), 0 0 60px rgba(255, 159, 67, 0.1);
+            z-index: 10;
+        }
+
+        .card:hover .card-image {
+            transform: scale(1.18);
+        }
+
+        .card:hover .food-name {
+            color: #FF6B35;
         }
 
         .card-image {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             background: linear-gradient(135deg, #FFE0B2 0%, #FFCC80 100%);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .card-content {
@@ -119,18 +208,18 @@
         }
 
         .food-emoji {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
         }
 
         .food-name {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 600;
             color: #333;
         }
 
         .card-desc {
             color: #666;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             line-height: 1.5;
             margin-bottom: 0.8rem;
             display: -webkit-box;
@@ -145,14 +234,11 @@
             align-items: center;
             padding-top: 0.6rem;
             border-top: 1px solid #eee;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .location {
             color: #FF6B35;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
         }
 
         .recommend {
@@ -163,8 +249,117 @@
             font-weight: 500;
         }
 
+        /* 页面过渡动画容器 */
+        .page-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-container.fade-out {
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+        }
+
+        /* 详情页过渡动画 */
         #detail-page {
             display: none;
+            padding-top: 180px;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #FFFBF5 0%, #FFF8E7 50%, #FFFAF0 100%);
+        }
+
+        #detail-page.active {
+            animation: pageFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* 页面进入动画 */
+        @keyframes pageFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 详情页内容元素动画 */
+        .detail-container {
+            animation: contentSlideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes contentSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 详情页图片加载动画 */
+        .detail-image {
+            animation: imageZoomIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes imageZoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.92);
+                border-radius: 30px;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                border-radius: 16px;
+            }
+        }
+
+        /* 返回按钮动画 */
+        .back-btn {
+            animation: btnSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: 0.1s;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        @keyframes btnSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* 详情页标题动画 */
+        .detail-header {
+            animation: headerSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        @keyframes headerSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .detail-container {
@@ -184,7 +379,6 @@
             text-decoration: none;
             font-weight: 500;
             margin-bottom: 1.5rem;
-            transition: background 0.3s ease;
         }
 
         .back-btn:hover {
@@ -219,7 +413,6 @@
             object-fit: cover;
             border-radius: 16px;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #FFE0B2 0%, #FFCC80 100%);
         }
 
         .detail-tags {
@@ -235,9 +428,6 @@
             padding: 0.4rem 0.8rem;
             border-radius: 20px;
             font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
         }
 
         .detail-desc {
@@ -248,19 +438,18 @@
         }
 
         .recommend-section {
-            background: linear-gradient(135deg, #FFF8E7 0%, #FFF0E0 100%);
+            background: linear-gradient(135deg, #FFF8E7 0%, #FFF0E0 50%, #FFFAF5 100%);
             padding: 1.5rem;
-            border-radius: 12px;
+            border-radius: 16px;
             margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 107, 53, 0.1);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.05);
         }
 
         .recommend-label {
             color: #FF6B35;
             font-weight: 600;
             margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .recommend-text {
@@ -287,39 +476,51 @@
             gap: 0.5rem;
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
 
         .like-btn {
-            background: #FFF3E0;
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
             color: #E65100;
         }
 
         .like-btn:hover {
-            background: #FFE0B2;
-            transform: translateY(-2px);
-        }
-
-        .like-btn.liked {
-            background: #FFE0B2;
+            background: linear-gradient(135deg, #FFE0B2 0%, #FFCC80 100%);
         }
 
         .collect-btn {
-            background: #E3F2FD;
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
             color: #1976D2;
         }
 
         .collect-btn:hover {
-            background: #BBDEFB;
-            transform: translateY(-2px);
-        }
-
-        .collect-btn.collected {
-            background: #BBDEFB;
+            background: linear-gradient(135deg, #BBDEFB 0%, #90CAF9 100%);
         }
 
         footer {
@@ -338,12 +539,7 @@
             border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
-            transition: background 0.3s ease;
             margin-bottom: 1rem;
-        }
-
-        .github-btn:hover {
-            background: #E65100;
         }
 
         .footer-text {
@@ -351,41 +547,80 @@
             font-size: 0.9rem;
         }
 
-        @media (max-width: 600px) {
+        /* 首页过渡动画 */
+        main#home-page {
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 300px;
+            }
+
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
 
             .grid {
                 grid-template-columns: 1fr;
-            }
-
-            .card-image {
-                height: 180px;
+                gap: 1.2rem;
             }
 
             .detail-image {
-                height: 250px;
+                height: 280px;
             }
 
             .detail-title {
                 font-size: 1.5rem;
+            }
+
+            .actions {
+                flex-wrap: wrap;
+            }
+
+            .action-btn {
+                flex: 1;
+                min-width: 140px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 320px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .card-content {
+                padding: 1rem;
+            }
+
+            .detail-image {
+                height: 220px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="header-content">
-            <div class="header-icon">📍</div>
-            <h1>班级美食地图</h1>
-            <p class="subtitle">同学们私藏的校园周边美食指南 · 共同发现舌尖上的快乐</p>
-            <div class="tags">
-                <span class="tag">🍜 小吃</span>
-                <span class="tag">🥤 饮品</span>
-                <span class="tag">🍗 快餐</span>
-                <span class="tag">🧁 甜品</span>
-            </div>
+        <div class="header-icon">📍</div>
+        <h1>班级美食地图</h1>
+        <p class="subtitle">同学们私藏的校园周边美食指南</p>
+        <input type="text" class="search-box" id="search-input" placeholder="搜索美食、店铺或推荐人...">
+        <div class="filter-section">
+            <button class="filter-btn active" data-category="all">全部</button>
+            <button class="filter-btn" data-category="小吃">🍜 小吃</button>
+            <button class="filter-btn" data-category="饮品">🥤 饮品</button>
+            <button class="filter-btn" data-category="快餐">🍗 快餐</button>
+            <button class="filter-btn" data-category="甜品">🧁 甜品</button>
         </div>
     </header>
 
@@ -395,9 +630,7 @@
 
     <main id="detail-page">
         <div class="detail-container">
-            <a href="#home" class="back-btn" id="back-btn">
-                ← 返回首页
-            </a>
+            <a href="#home" class="back-btn" id="back-btn">← 返回首页</a>
             <div class="detail-header">
                 <span class="detail-emoji" id="detail-emoji">🍳</span>
                 <div>
@@ -437,104 +670,112 @@
                 id: 0,
                 name: '阿强铁板炒饭',
                 emoji: '🍳',
-                image: 'https://source.unsplash.com/featured/?friedrice,teppanyaki',
+                image: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=600&h=400&fit=crop',
                 location: '📍 西门小巷',
                 recommender: '班长推荐',
                 shortDesc: '粒粒分明的米饭配上新鲜时蔬和嫩滑的鸡蛋，铁板现炒香气扑鼻',
                 tags: ['🔥 招牌必点', '💰 人均12元', '⏰ 11:00-21:00', '✨ 锅气十足'],
-                desc: '这家铁板炒饭可是我们班的集体回忆！记得高二那年冬天，晚自习后大家总爱结伴来这里。老板阿强是个很热情的大叔，炒饭的时候铁板滋滋作响，香气能飘出好几条街。米饭粒粒分明，鸡蛋炒得金黄嫩滑，加上胡萝卜丁、玉米粒和火腿，每一口都是满满的幸福感。最绝的是他自制的辣酱，辣得过瘾但又不会太刺激，配饭简直绝了！',
-                recommendText: '这家店从我高一就开始吃了，三年来味道一直没变！每次考试前压力大的时候，我都会来吃一份加辣的铁板炒饭，吃完瞬间满血复活。强烈推荐加蛋加肠的豪华版，保证你吃了还想吃！',
+                category: '快餐',
+                desc: '这家铁板炒饭可是我们班的集体回忆！记得高二那年冬天，晚自习后大家总爱结伴来这里。老板阿强是个很热情的大叔，炒饭的时候铁板滋滋作响，香气能飘出好几条街。',
+                recommendText: '这家店从我高一就开始吃了，三年来味道一直没变！每次考试前压力大的时候，我都会来吃一份加辣的铁板炒饭，吃完瞬间满血复活。',
                 recommendName: '班长 张小明'
             },
             {
                 id: 1,
                 name: '柳州螺蛳粉',
                 emoji: '🍜',
-                image: 'https://source.unsplash.com/featured/?luosifen,snails',
+                image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=400&fit=crop',
                 location: '📍 东门小吃街',
                 recommender: '学习委员推荐',
                 shortDesc: '正宗柳州风味，酸笋的独特香气配上红油汤底，腐竹酥脆、花生饱满',
                 tags: ['🌶️ 酸辣过瘾', '💰 人均15元', '⏰ 10:00-22:00', '🌿 正宗柳州味'],
-                desc: '这家螺蛳粉是学习委员发现的宝藏店铺！虽然味道有点独特，但吃过一次就会上瘾。酸笋的酸爽、腐竹的酥脆、花生的香脆，再加上辣油的刺激，简直是味蕾的狂欢。每次月考结束，我们几个好朋友都会来这里聚餐，一边吐槽考试一边吸溜螺蛳粉，烦恼瞬间消失！',
-                recommendText: '作为一个螺蛳粉重度爱好者，我可以负责任地说这家是我吃过最正宗的！汤头浓郁，酸笋够臭够香，粉的口感也很劲道。建议第一次尝试的同学从微辣开始，慢慢挑战自己的极限～',
+                category: '小吃',
+                desc: '这家螺蛳粉是学习委员发现的宝藏店铺！虽然味道有点独特，但吃过一次就会上瘾。酸笋的酸爽、腐竹的酥脆、花生的香脆，再加上辣油的刺激，简直是味蕾的狂欢。',
+                recommendText: '作为一个螺蛳粉重度爱好者，我可以负责任地说这家是我吃过最正宗的！汤头浓郁，酸笋够臭够香，粉的口感也很劲道。',
                 recommendName: '学习委员 李婷婷'
             },
             {
                 id: 2,
                 name: '天津煎饼果子',
                 emoji: '🥞',
-                image: 'https://source.unsplash.com/featured/?pancake,chinese',
+                image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=400&fit=crop',
                 location: '📍 南门早市',
                 recommender: '体育委员推荐',
-                shortDesc: '金黄酥脆的薄饼裹上新鲜鸡蛋，配上秘制甜面酱和脆饼，分量足又管饱',
+                shortDesc: '金黄酥脆的薄饼裹上新鲜鸡蛋，配上秘制甜面酱和脆饼',
                 tags: ['🌅 早餐首选', '💰 人均6元', '⏰ 6:00-10:00', '⚽ 补充能量'],
-                desc: '体育委员每天早上训练前都会来这里吃煎饼果子！这家的煎饼皮特别薄脆，鸡蛋摊得金黄均匀，配上老板自制的甜面酱和酥脆的馃篦儿，一口下去咔嚓作响。早上来一套，一整天都精力充沛。老板是天津人，说话特别逗，每次去都能听他讲段子。',
-                recommendText: '训练前必须来一套！碳水化合物充足，吃完跑五公里都不带喘气的。老板人特别好，知道我训练量大，每次都给我多加一个鸡蛋。强烈推荐加辣条的隐藏吃法，绝对惊艳！',
+                category: '小吃',
+                desc: '体育委员每天早上训练前都会来这里吃煎饼果子！这家的煎饼皮特别薄脆，鸡蛋摊得金黄均匀，配上老板自制的甜面酱和酥脆的馃篦儿。',
+                recommendText: '训练前必须来一套！碳水化合物充足，吃完跑五公里都不带喘气的。老板人特别好，知道我训练量大，每次都给我多加一个鸡蛋。',
                 recommendName: '体育委员 王大力'
             },
             {
                 id: 3,
                 name: '茶语时光奶茶',
                 emoji: '🥤',
-                image: 'https://source.unsplash.com/featured/?milktea,bubbletea',
+                image: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&h=400&fit=crop',
                 location: '📍 教学楼对面',
                 recommender: '文艺委员推荐',
-                shortDesc: '现煮茶底搭配新鲜牛奶，珍珠Q弹有嚼劲。招牌芋泥波波奶绿是全班公认的必点饮品',
+                shortDesc: '现煮茶底搭配新鲜牛奶，珍珠Q弹有嚼劲',
                 tags: ['🧋 芋泥波波', '💰 人均12元', '⏰ 9:00-22:00', '📚 自习必备'],
-                desc: '教学楼对面的奶茶店简直是我们的秘密基地！文艺委员发现的这家店，芋泥波波奶绿堪称一绝。芋泥都是每天新鲜现做的，绵密香甜，配上清爽的奶绿，一点都不腻。我们经常在这里讨论班级活动策划，一杯奶茶就能让灵感源源不断。',
-                recommendText: '每次写策划案没思路的时候，我就会来这里点一杯芋泥波波奶绿。看着窗外的梧桐树，喝着香甜的奶茶，灵感自然而然就来了。他们家的芋泥真的超级足，性价比超高！',
+                category: '饮品',
+                desc: '教学楼对面的奶茶店简直是我们的秘密基地！文艺委员发现的这家店，芋泥波波奶绿堪称一绝。',
+                recommendText: '每次写策划案没思路的时候，我就会来这里点一杯芋泥波波奶绿。看着窗外的梧桐树，喝着香甜的奶茶，灵感自然而然就来了。',
                 recommendName: '文艺委员 陈思思'
             },
             {
                 id: 4,
                 name: 'Obligi炸鸡小屋',
                 emoji: '🍗',
-                image: 'https://source.unsplash.com/featured/?friedchicken,crispy',
+                image: 'https://images.unsplash.com/photo-1547592166-23ac5539339d?w=600&h=400&fit=crop',
                 location: '📍 后街中段',
                 recommender: '生活委员推荐',
-                shortDesc: '韩式炸鸡外酥里嫩，蜂蜜芥末酱是绝配！配上冰可乐，简直是周末追剧的完美搭档',
+                shortDesc: '韩式炸鸡外酥里嫩，蜂蜜芥末酱是绝配',
                 tags: ['🍯 蜂蜜芥末', '💰 人均25元', '⏰ 11:00-23:00', '📺 追剧必备'],
-                desc: '生活委员发掘的这家韩式炸鸡店，简直是我们周末的快乐源泉！炸鸡外皮酥脆到咬开有咔嚓声，内里的鸡肉却鲜嫩多汁。蜂蜜芥末酱是他们家的灵魂，甜中带辣，蘸什么都好吃。记得高三那年冬天，我们全班在这里跨年，炸鸡配啤酒，笑声回荡在整个小店。',
-                recommendText: '这家炸鸡我能吃一辈子！外皮超级脆，肉又嫩又多汁。一定要点蜂蜜芥末味的，相信我，蘸酱吃一口就上头。建议搭配冰可乐，解腻又爽！',
+                category: '快餐',
+                desc: '生活委员发掘的这家韩式炸鸡店，简直是我们周末的快乐源泉！炸鸡外皮酥脆到咬开有咔嚓声，内里的鸡肉却鲜嫩多汁。',
+                recommendText: '这家炸鸡我能吃一辈子！外皮超级脆，肉又嫩又多汁。一定要点蜂蜜芥末味的，相信我，蘸酱吃一口就上头。',
                 recommendName: '生活委员 赵小琳'
             },
             {
                 id: 5,
                 name: '川味麻辣烫',
                 emoji: '🍲',
-                image: 'https://source.unsplash.com/featured/?malatang,hotpot',
+                image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=400&fit=crop',
                 location: '📍 食堂后门',
                 recommender: '卫生委员推荐',
-                shortDesc: '自选食材新鲜丰富，汤底麻辣鲜香。冬天来一碗，从头暖到脚，简直是御寒神器',
+                shortDesc: '自选食材新鲜丰富，汤底麻辣鲜香',
                 tags: ['🌶️ 麻辣鲜香', '💰 人均18元', '⏰ 10:00-21:00', '❄️ 冬日暖身'],
-                desc: '食堂后门的这家麻辣烫是卫生委员的最爱！食材都是当天新鲜采购的，种类超级丰富。汤底是正宗的川味麻辣，辣得过瘾但又不会让人觉得不舒服。冬天上完体育课，来一碗热乎乎的麻辣烫，瞬间驱散全身的寒气。老板还会贴心地问你要不要加麻加辣。',
-                recommendText: '作为一个四川人，这家的麻辣烫真的很对我的胃口！汤底够麻够辣，食材也很新鲜。推荐必点牛肉丸、藕片和宽粉，吸满汤汁后超级入味。冬天来一碗，暖到心里！',
+                category: '小吃',
+                desc: '食堂后门的这家麻辣烫是卫生委员的最爱！食材都是当天新鲜采购的，种类超级丰富。',
+                recommendText: '作为一个四川人，这家的麻辣烫真的很对我的胃口！汤底够麻够辣，食材也很新鲜。',
                 recommendName: '卫生委员 刘小红'
             },
             {
                 id: 6,
                 name: '东北烤冷面',
                 emoji: '🌭',
-                image: 'https://source.unsplash.com/featured/?coldnoodles,grilled',
+                image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop',
                 location: '📍 北门门口',
                 recommender: '宣传委员推荐',
-                shortDesc: '劲道的冷面皮包裹着鸡蛋和火腿肠，刷上秘制酱料撒上芝麻，校门口的经典味道',
+                shortDesc: '劲道的冷面皮包裹着鸡蛋和火腿肠',
                 tags: ['🔥 校门口回忆', '💰 人均8元', '⏰ 5:00-22:00', '✨ 经典小吃'],
-                desc: '北门门口的烤冷面摊承载了我们太多的回忆！宣传委员每天放学都会来买一份。老板手法娴熟，冷面皮烤得恰到好处，鸡蛋打得均匀，加上火腿肠和香菜，刷上秘制酱料，撒上芝麻和葱花，简直是人间美味。每次放学铃声一响，这里就排起长队。',
-                recommendText: '这是我每天放学的必修课！冷面皮劲道有嚼劲，酱料是老板秘制的，甜辣适中。一定要加辣条和卫龙，相信我，那味道绝了！每次路过都忍不住要买一份。',
+                category: '小吃',
+                desc: '北门门口的烤冷面摊承载了我们太多的回忆！宣传委员每天放学都会来买一份。',
+                recommendText: '这是我每天放学的必修课！冷面皮劲道有嚼劲，酱料是老板秘制的，甜辣适中。',
                 recommendName: '宣传委员 孙小华'
             },
             {
                 id: 7,
                 name: '粤味双皮奶',
                 emoji: '🧁',
-                image: 'https://source.unsplash.com/featured/?milkpudding,dessert',
+                image: 'https://images.unsplash.com/photo-1571877227908-95a63e212606?w=600&h=400&fit=crop',
                 location: '📍 步行街转角',
                 recommender: '团支书推荐',
-                shortDesc: '正宗广东风味，奶皮厚实香醇，口感细腻顺滑。红豆双皮奶和芒果双皮奶是人气爆款',
+                shortDesc: '正宗广东风味，奶皮厚实香醇，口感细腻顺滑',
                 tags: ['🥛 奶香浓郁', '💰 人均10元', '⏰ 11:00-21:00', '💕 甜蜜时光'],
-                desc: '步行街转角的双皮奶店是团支书的私藏！正宗的广东风味，奶皮厚实香醇，口感细腻顺滑得像丝绸一样。红豆双皮奶里的红豆煮得软烂香甜，芒果双皮奶用的是新鲜芒果，果香浓郁。每次班级团建结束，我们都会来这里吃甜品，聊聊天放松一下。',
-                recommendText: '这家双皮奶真的太治愈了！奶香味超级浓郁，口感顺滑得像在吃云朵。推荐夏天吃冰双皮奶，配上红豆或者芒果，简直是神仙享受。心情不好的时候来一碗，瞬间治愈所有烦恼！',
+                category: '甜品',
+                desc: '步行街转角的双皮奶店是团支书的私藏！正宗的广东风味，奶皮厚实香醇，口感细腻顺滑得像丝绸一样。',
+                recommendText: '这家双皮奶真的太治愈了！奶香味超级浓郁，口感顺滑得像在吃云朵。',
                 recommendName: '团支书 周小美'
             }
         ];
@@ -543,6 +784,8 @@
         const detailPage = document.getElementById('detail-page');
         const foodGrid = document.getElementById('food-grid');
         const backBtn = document.getElementById('back-btn');
+        const searchInput = document.getElementById('search-input');
+        const filterBtns = document.querySelectorAll('.filter-btn');
 
         const likeBtn = document.getElementById('like-btn');
         const collectBtn = document.getElementById('collect-btn');
@@ -551,29 +794,64 @@
         let currentFood = null;
         const likes = {};
         const collects = {};
+        let currentCategory = 'all';
+        let currentSearch = '';
+
+        function createCard(food) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <img src="${food.image}" alt="${food.name}" class="card-image">
+                <div class="card-content">
+                    <div class="card-header">
+                        <span class="food-emoji">${food.emoji}</span>
+                        <h3 class="food-name">${food.name}</h3>
+                    </div>
+                    <p class="card-desc">${food.shortDesc}</p>
+                    <div class="card-info">
+                        <span class="location">${food.location}</span>
+                        <span class="recommend">${food.recommender}</span>
+                    </div>
+                </div>
+            `;
+            card.addEventListener('click', () => showDetail(food));
+            return card;
+        }
+
+        function filterFoods() {
+            let filtered = foods;
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(food => food.category === currentCategory);
+            }
+            if (currentSearch.trim()) {
+                const searchLower = currentSearch.toLowerCase();
+                filtered = filtered.filter(food => 
+                    food.name.toLowerCase().includes(searchLower) ||
+                    food.shortDesc.toLowerCase().includes(searchLower) ||
+                    food.recommender.toLowerCase().includes(searchLower) ||
+                    food.location.toLowerCase().includes(searchLower)
+                );
+            }
+            return filtered;
+        }
 
         function renderHomePage() {
             foodGrid.innerHTML = '';
-            foods.forEach(food => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <img src="${food.image}" alt="${food.name}" class="card-image">
-                    <div class="card-content">
-                        <div class="card-header">
-                            <span class="food-emoji">${food.emoji}</span>
-                            <h3 class="food-name">${food.name}</h3>
-                        </div>
-                        <p class="card-desc">${food.shortDesc}</p>
-                        <div class="card-info">
-                            <span class="location">${food.location}</span>
-                            <span class="recommend">${food.recommender}</span>
-                        </div>
+            const filteredFoods = filterFoods();
+            
+            if (filteredFoods.length === 0) {
+                foodGrid.innerHTML = `
+                    <div class="no-results">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">😔</div>
+                        <p>没有找到符合条件的美食</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">试试其他搜索词或筛选条件吧</p>
                     </div>
                 `;
-                card.addEventListener('click', () => {
-                    showDetail(food);
-                });
+                return;
+            }
+            
+            filteredFoods.forEach(food => {
+                const card = createCard(food);
                 foodGrid.appendChild(card);
             });
         }
@@ -600,19 +878,50 @@
             });
 
             likeCount.textContent = likes[food.id] || 0;
-            likeBtn.classList.toggle('liked', collects[food.id]);
-            collectBtn.classList.toggle('collected', collects[food.id]);
 
-            homePage.style.display = 'none';
-            detailPage.style.display = 'block';
+            // 重置详情页动画状态
+            detailPage.classList.remove('active');
+            const detailContainer = document.querySelector('.detail-container');
+            detailContainer.style.opacity = '0';
+            detailContainer.style.transform = 'translateY(50px)';
 
-            window.location.hash = `#detail-${food.id}`;
+            // 先隐藏首页，再显示详情页
+            homePage.style.opacity = '0';
+            homePage.style.transform = 'translateY(20px) scale(0.98)';
+            
+            setTimeout(() => {
+                homePage.style.display = 'none';
+                detailPage.style.display = 'block';
+                window.location.hash = `#detail-${food.id}`;
+                
+                // 触发详情页动画
+                setTimeout(() => {
+                    detailPage.classList.add('active');
+                    detailContainer.style.opacity = '1';
+                    detailContainer.style.transform = 'translateY(0)';
+                }, 50);
+            }, 300);
         }
 
         function goHome() {
-            detailPage.style.display = 'none';
-            homePage.style.display = 'block';
-            window.location.hash = '#home';
+            // 先隐藏详情页
+            detailPage.style.opacity = '0';
+            detailPage.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                detailPage.style.display = 'none';
+                homePage.style.display = 'block';
+                homePage.style.opacity = '0';
+                homePage.style.transform = 'translateY(20px)';
+                
+                // 触发首页进入动画
+                setTimeout(() => {
+                    homePage.style.opacity = '1';
+                    homePage.style.transform = 'translateY(0)';
+                }, 50);
+                
+                window.location.hash = '#home';
+            }, 300);
         }
 
         backBtn.addEventListener('click', (e) => {
@@ -630,8 +939,22 @@
         collectBtn.addEventListener('click', () => {
             if (currentFood) {
                 collects[currentFood.id] = !collects[currentFood.id];
-                collectBtn.classList.toggle('collected', collects[currentFood.id]);
+                collectBtn.style.background = collects[currentFood.id] ? '#BBDEFB' : '#E3F2FD';
             }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            renderHomePage();
+        });
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                renderHomePage();
+            });
         });
 
         function handleHashChange() {
@@ -648,10 +971,28 @@
         }
 
         window.addEventListener('hashchange', handleHashChange);
-
         renderHomePage();
-
         handleHashChange();
+
+        /* 导航栏滚动收缩效果 */
+        const header = document.querySelector('header');
+        let lastScrollY = window.scrollY;
+
+        function handleScroll() {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 50 && currentScrollY > lastScrollY) {
+                // 向下滚动且超过50px，收缩导航栏
+                header.classList.add('scrolled');
+            } else if (currentScrollY < 30) {
+                // 向上滚动回到顶部，展开导航栏
+                header.classList.remove('scrolled');
+            }
+            
+            lastScrollY = currentScrollY;
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
     </script>
 </body>
 </html>
